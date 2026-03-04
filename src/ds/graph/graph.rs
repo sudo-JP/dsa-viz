@@ -1,30 +1,42 @@
-use crate::event::GraphTraversalEvent;
+use crate::event::{CellIndex, PathfindingEvent};
+
+#[derive(PartialEq, Clone, Copy)]
+pub enum Cell {
+    Empty, 
+    Wall, 
+    Start, 
+    Target,
+}
 
 pub struct Graph {
-    pub adj_list: Vec<Vec<i32>>,
-    pub events: Vec<GraphTraversalEvent>,
+    pub cells: Vec<Vec<Cell>>,
+    pub events: Vec<Vec<PathfindingEvent>>,
+    pub start_idx: CellIndex,
+    pub target_idx: CellIndex,
 }
 
 impl Graph {
-    pub fn new(n: i32) -> Self {
-        let mut list = vec![];
-        let node1 = vec![1, 3];
-        let node2 = vec![0, 2];
-        let node3 = vec![1, 3];
-        let node4 = vec![0, 2];
-        list.push(node1);
-        list.push(node2);
-        list.push(node3);
-        list.push(node4);
+    pub fn new(width: usize, height: usize) -> Self {
+        let mut cells: Vec<Vec<Cell>> = vec![];
+        let events: Vec<Vec<PathfindingEvent>> = vec![];
 
-        let mut events: Vec<GraphTraversalEvent> = vec![];
-        events.push(GraphTraversalEvent::Unvisit(0));
-        events.push(GraphTraversalEvent::Unvisit(1));
-        events.push(GraphTraversalEvent::Unvisit(2));
-        events.push(GraphTraversalEvent::Unvisit(3));
+        for _ in 0..height {
+            let mut row: Vec<Cell> = vec![];
+            for _ in 0..width{
+                row.push(Cell::Empty);
+            } 
+            cells.push(row);
+        }
+
+        // Hardcode for now, let starting at (0, 0)
+        // Target at (height - 1, width - 1)
+        cells[0][0] = Cell::Start;
+        cells[height - 1][width - 1] = Cell::Target;
 
         Self {
-            adj_list: list,
+            start_idx: CellIndex{row: 0, col: 0}, 
+            target_idx: CellIndex{row: height - 1, col: width - 1},
+            cells: cells,
             events: events,
         }
     }

@@ -1,3 +1,3 @@
 pub mod graph;
 
-pub use graph::{GraphTraversalEvent, NodeID};
+pub use graph::{PathfindingEvent, CellIndex};

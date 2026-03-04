@@ -1,8 +1,14 @@
-pub type NodeID = i32;
+#[derive(PartialEq, Clone, Copy, Eq, Hash, Debug)]
+pub struct CellIndex {
+    pub row: usize, 
+    pub col: usize,
+}
 
-pub enum GraphTraversalEvent {
-    Visiting(NodeID),
-    Visited(NodeID),
-    Unvisit(NodeID),
+#[derive(Debug)]
+pub enum PathfindingEvent {
+    Visiting(CellIndex),
+    Visited(CellIndex),
+    Unvisit(CellIndex),
+    PathFound(Vec<CellIndex>),
 }
 

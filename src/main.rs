@@ -1,14 +1,14 @@
-use dsa_viz::{ds::graph::Graph, event::GraphTraversalEvent};
+use dsa_viz::{Graph};
 
 
-fn main() {
-    let g  = Graph::new(0);
-    let v = g.dfs();
-    for item in v {
-        match item {
-            GraphTraversalEvent::Unvisit(i) => { println!("unvisit {i}")},
-            GraphTraversalEvent::Visiting(i) => { println!("visiting {i}")},
-            GraphTraversalEvent::Visited(i) => { println!("visited {i}")},
-        }
+fn main() -> color_eyre::Result<()> {
+    let g  = Graph::new(2, 2);
+    let events = g.dfs();
+    for event in events {
+        println!("{:?}", event);
     }
+    /*color_eyre::install()?;
+    ratatui::run(|terminal| App::new().run(terminal))?;*/
+    Ok(())
 }
+
