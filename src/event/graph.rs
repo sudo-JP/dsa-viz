@@ -9,6 +9,6 @@ pub enum PathfindingEvent {
     Visiting(CellIndex),
     Visited(CellIndex),
     Unvisit(CellIndex),
-    PathFound(Vec<CellIndex>),
+    Found(CellIndex),
 }
 

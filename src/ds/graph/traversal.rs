@@ -19,6 +19,7 @@ impl Graph {
         
         while let Some(cell) = stack.pop() {
             if cell == self.target_idx {
+                events.push(PathfindingEvent::Visiting(cell));
                 break;
             }
             if visited[cell.row][cell.col] { continue; }
@@ -51,15 +52,12 @@ impl Graph {
             events.push(PathfindingEvent::Visited(cell));
         }
 
-        let mut path: Vec<CellIndex> = vec![];
         let mut current = self.target_idx;
         while let Some(&parent) = backtrack.get(&current) {
-            path.push(current);
+            events.push(PathfindingEvent::Found(current));
             current = parent;
         }
-        path.push(current);
-        path.reverse();
-        events.push(PathfindingEvent::PathFound(path));
+        events.push(PathfindingEvent::Found(current));
         
         events
     }
