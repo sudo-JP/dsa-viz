@@ -1,6 +1,3 @@
-use ratatui::style::Color;
-
-
 #[derive(PartialEq, Clone, Copy, Eq, Hash, Debug)]
 pub struct CellIndex {
     pub row: usize, 
